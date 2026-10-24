@@ -1,0 +1,5 @@
+CREATE TYPE expense_tracker.job_state as ENUM('queued','processing','completed','failed');
+CREATE TABLE expense_tracker.expense_job(id UUID PRIMARY KEY DEFAULT gen_random_uuid(),input_text TEXT,state expense_tracker.job_state,error_message TEXT,created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,updated_at TIMESTAMPTZ);
+CREATE TABLE expense_tracker.expenses(id UUID PRIMARY KEY DEFAULT gen_random_uuid(),job_id UUID,amount NUMERIC,currency NUMERIC,merchant VARCHAR(20),category VARCHAR(20),expense_date DATE DEFAULT CURRENT_DATE,payment_method VARCHAR(10),created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP);
+ALTER TABLE expense_tracker.expenses ADD CONSTRAINT fk_job_id FOREIGN KEY(job_id) REFERENCES expense_tracker.expense_job(id);
+CREATE TABLE expense_tracker.knowledge_chunks(id UUID PRIMARY KEY DEFAULT gen_random_uuid(),content TEXT,source_title VARCHAR(255),source_url VARCHAR(100),created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP);
