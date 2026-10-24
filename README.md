@@ -1,1 +1,2 @@
-This is my first commit.
+# ai-expense-tracker
+AI-Powered Expense tracker
